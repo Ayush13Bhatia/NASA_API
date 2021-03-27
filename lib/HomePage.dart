@@ -11,13 +11,15 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List usersData;
   bool isLoading = true;
-  final String url = "https://randomuser.me/api/?results=50";
+  // final String url = "https://randomuser.me/api/?results=50";
+  final String url =
+      "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY";
 
   Future getData() async {
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
-    List data = jsonDecode(response.body)['results'];
+    List data = jsonDecode(response.body)['photos'];
     setState(() {
       usersData = data;
       isLoading = false;
@@ -52,8 +54,8 @@ class _HomepageState extends State<Homepage> {
                               width: 70.0,
                               height: 70.0,
                               fit: BoxFit.contain,
-                              image: NetworkImage(
-                                  usersData[index]['picture']['thumbnail']),
+                              // image: NetworkImage(usersData[index]['img_src']),
+                              image: AssetImage('assets/logo.png'),
                             ),
                           ),
                           Expanded(
@@ -62,15 +64,18 @@ class _HomepageState extends State<Homepage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  usersData[index]['name']['first'] +
-                                      " " +
-                                      usersData[index]['name']['last'],
+                                  usersData[index]['camera']['full_name'],
+                                  //  +
+                                  //     " " +
+                                  //     usersData[index]['name']['last'],
                                   style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text("Phone: ${usersData[index]['phone']}"),
-                                Text("Gender: ${usersData[index]['gender']}"),
+                                Text(
+                                    "Rover: ${usersData[index]['rover']['name']}"),
+                                Text(
+                                    "Lading Date: ${usersData[index]['rover']['landing_date']}"),
                               ],
                             ),
                           )
