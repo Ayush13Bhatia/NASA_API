@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Random User',
-      theme: ThemeData(primarySwatch: Colors.orange),
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
       home: Homepage(),
     );
   }

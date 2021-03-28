@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:gradient_widgets/gradient_widgets.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -26,6 +27,25 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
+  // Future getData() async {
+  //   var client = http.Client();
+  //   try {
+  //     var uriResponse = await client.post(
+  //         Uri.parse(
+  //             "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY"),
+  //         body: {"Accept": "application/json"});
+  //     var response = await client.get(uriResponse.body);
+  //     List data = jsonDecode(response.body)['photos'];
+  //     print(data);
+  //     setState(() {
+  //       usersData = data;
+  //       isLoading = false;
+  //     });
+  //   } finally {
+  //     client.close();
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -42,41 +62,48 @@ class _HomepageState extends State<Homepage> {
         child: Center(
           child: isLoading
               ? CircularProgressIndicator()
-              : ListView.builder(
+              : PageView.builder(
+                  scrollDirection: Axis.vertical,
+                  controller: PageController(
+                    viewportFraction: 0.8,
+                  ),
                   itemCount: usersData == null ? 0 : usersData.length,
                   itemBuilder: (context, index) {
-                    return Card(
+                    return GradientCard(
                       child: Row(
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.all(20.0),
                             child: Image(
-                              width: 70.0,
-                              height: 70.0,
+                              width: 300.0,
+                              height: 300.0,
+                              alignment: Alignment.center,
                               fit: BoxFit.contain,
-                              // image: NetworkImage(usersData[index]['img_src']),
-                              image: AssetImage('assets/logo.png'),
+                              image: NetworkImage(
+                                usersData[index]['img_src'],
+                              ),
+                              // image: AssetImage('assets/logo.png'),
                             ),
                           ),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  usersData[index]['camera']['full_name'],
-                                  //  +
-                                  //     " " +
-                                  //     usersData[index]['name']['last'],
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                    "Rover: ${usersData[index]['rover']['name']}"),
-                                Text(
-                                    "Lading Date: ${usersData[index]['rover']['landing_date']}"),
-                              ],
+                              // children: <Widget>[
+                              // Text(
+                              // usersData[index]['camera']['full_name'],
+                              //  +
+                              //     " " +
+                              //     usersData[index]['name']['last'],
+                              //     style: TextStyle(
+                              //         fontSize: 20.0,
+                              //         fontWeight: FontWeight.bold),
+                              //   ),
+                              //   Text(
+                              //       "Rover: ${usersData[index]['rover']['name']}"),
+                              //   Text(
+                              //       "Lading Date: ${usersData[index]['rover']['landing_date']}"),
+                              // ],
                             ),
                           )
                         ],
