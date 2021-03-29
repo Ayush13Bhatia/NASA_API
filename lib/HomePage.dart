@@ -27,24 +27,7 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  // Future getData() async {
-  //   var client = http.Client();
-  //   try {
-  //     var uriResponse = await client.post(
-  //         Uri.parse(
-  //             "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY"),
-  //         body: {"Accept": "application/json"});
-  //     var response = await client.get(uriResponse.body);
-  //     List data = jsonDecode(response.body)['photos'];
-  //     print(data);
-  //     setState(() {
-  //       usersData = data;
-  //       isLoading = false;
-  //     });
-  //   } finally {
-  //     client.close();
-  //   }
-  // }
+
 
   @override
   void initState() {
